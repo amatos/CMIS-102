@@ -13,13 +13,34 @@
 # each person's share of the total cost.
 
 # Alberth Matos
-# DATE
+# '07/04/2023'
 # CMIS 102
 
 # Constants:
 DEVELOPER = 'Alberth Matos'
-DATE = DATE
+DATE = '07/04/2023'
 CLASS = 'CMIS 102' # n.b. class (all lowercase) is a reserved named
+
+def get_nr_people():
+    pass
+
+def get_nr_days():
+    pass
+
+def get_food_cost():
+    pass
+
+def get_fuel_cost():
+    pass
+
+def get_total_food(nr_days:int, food_per_day:int):
+    pass
+
+def get_total_gas(nr_days:int, gas_per_day:int):
+    pass
+
+def share_per_person(nr_people:int, food_cost:int, gas_cost:int):
+    pass
 
 def main():
     # Class information
