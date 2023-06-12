@@ -160,13 +160,19 @@ def main():
         if dust:
             total_dusted = total_dusted + 1
 
-    # Add everything up.
+    # Add everything up
+    # Total number of small rooms * 50/room
     cost_total_small_rooms = int(total_small_rooms) * SMALL
+    # Total number of medium rooms * 75/room
     cost_total_medium_rooms = int(total_medium_rooms) * MEDIUM
+    # Total number of large rooms * 100/room
     cost_total_large_rooms = int(total_large_rooms) * LARGE
+    # Flat $5 cost to dust a room
     cost_total_dusted = int(total_dusted) * DUST
+    # Flat $100 charge to clean a kitchen
     if clean_kitchen:
         cost_total_kitchen = int(KITCHEN)
+    # Flat $5 charge per window
     cost_total_windows = int(window_count) * WINDOW
     subtotal = cost_total_windows + cost_total_dusted  + cost_total_kitchen + cost_total_large_rooms + cost_total_medium_rooms + cost_total_small_rooms
 
@@ -181,7 +187,7 @@ def main():
     if int(window_count) > 0:
         print(f'Total for window cleaning: {window_count} @ {cost_total_windows}')
     print('-'*24)
-    print(f'Subtotal: ${subtotal}')
+    print(f'Total: ${subtotal}')
 
 
 
