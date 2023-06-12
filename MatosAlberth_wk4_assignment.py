@@ -28,6 +28,7 @@ BATHROOM = 35
 KITCHEN = 100
 WINDOW = 5
 DUST = 5
+DEEP_CLEAN_SURCHARGE = 2.5
 
 # Constants for sizes
 # We only account for small and medium rooms, because anything that
@@ -35,6 +36,18 @@ DUST = 5
 SMALL_ROOM = 100
 MEDIUM_ROOM = 150
 
+
+def cleaning_type():
+    deep_clean = input(f'Are we performing an intensive deep cleaning? (y or n) ')
+    while deep_clean not in ('Y', 'y', 'n', 'N'):
+        # Check if inputted value is in the set [NnYy], and if not, loop until it is.
+        print('Please enter either Y or N.')
+        deep_clean = input(f'Do we clean a kitchen? (y or n) ')
+    # Return a bool depending on whether the kitchen needs to cleaned or not
+    if deep_clean.lower() in 'y':
+        return True
+    else:
+        return False
 
 def dust_rooms(room_type: str, rooms: dict):
     for room in rooms:
@@ -189,6 +202,9 @@ def main():
     # We re-use get_rooms, even through "windows" aren't rooms, but we're just getting an int anyway
     window_count = get_rooms('windows')
 
+    # Check if this is a deep cleaning.  We will apply a surcharge later if so.
+    deep_clean = cleaning_type()
+
     # Get the cost of each room type
     # cost_by_room returns 4 ints, in the order of: small, medium, large, dusted
     cost_small_rooms, cost_medium_rooms, cost_large_rooms, cost_dusted_rooms = cost_by_room(bedrooms_dict,
@@ -221,17 +237,24 @@ def main():
             + cost_total_bathrooms + cost_total_windows
 
     # Print out a summary
-    print('Summary:\n_______')
-    print(f'Subtotal for small rooms: {count_small_rooms} @ {cost_small_rooms}')
-    print(f'Subtotal for medium rooms: {count_medium_rooms} @ {cost_medium_rooms}')
-    print(f'Subtotal for large rooms: {count_large_rooms} @ {cost_large_rooms}')
-    print(f'Total rooms that need to be dusted: {count_dusted_rooms} @ {cost_dusted_rooms}')
+    print('\n\n_______\nSummary:\n_______')
+    if count_small_rooms > 0:
+        print(f'Subtotal for small rooms: {count_small_rooms} @ ${cost_small_rooms}')
+    if count_medium_rooms > 0:
+        print(f'Subtotal for medium rooms: {count_medium_rooms} @ ${cost_medium_rooms}')
+    if count_large_rooms > 0:
+        print(f'Subtotal for large rooms: {count_large_rooms} @ ${cost_large_rooms}')
+    if count_dusted_rooms > 0:
+        print(f'Total rooms that need to be dusted: {count_dusted_rooms} @ ${cost_dusted_rooms}')
     if clean_kitchen:
-        print(f'Subtotal for cleaning the kitchen: {cost_total_kitchen}')
+        print(f'Subtotal for cleaning the kitchen: ${cost_total_kitchen}')
     if int(window_count) > 0:
-        print(f'Subtotal for window cleaning: {window_count} @ {cost_total_windows}')
+        print(f'Subtotal for window cleaning: {window_count} @ ${cost_total_windows}')
     if int(bathrooms) > 0:
-        print(f'Subtotal for window cleaning: {bathrooms} @ {cost_total_bathrooms}')
+        print(f'Subtotal for window cleaning: {bathrooms} @ ${cost_total_bathrooms}')
+    if deep_clean:
+        total = total * DEEP_CLEAN_SURCHARGE
+        print('Deep cleaning surcharge:  1 @ 250%')
     print('-'*24)
     print(f'Total: ${total}')
 
